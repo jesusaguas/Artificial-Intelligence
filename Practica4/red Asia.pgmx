@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ProbModelXML formatVersion="0.2.0">
+  <ProbNet type="BayesianNetwork">
+    <Comment showWhenOpeningNetwork="false"><![CDATA[<<Pulse dos veces para incluir/modificar comentario>>]]></Comment>
+    <AdditionalProperties />
+    <Variables>
+      <Variable name="Visito Asia (A)" type="finiteStates" role="chance">
+        <Coordinates x="326" y="116" />
+        <States>
+          <State name="NO" />
+          <State name="SI" />
+        </States>
+      </Variable>
+      <Variable name="Tuberculosis (T)" type="finiteStates" role="chance">
+        <Coordinates x="334" y="211" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+      <Variable name="Enfermo ToC (E)" type="finiteStates" role="chance">
+        <Coordinates x="533" y="298" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+      <Variable name="Cáncer Pulmón (C)" type="finiteStates" role="chance">
+        <Coordinates x="594" y="211" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+      <Variable name="Positivo en Rayos (X)" type="finiteStates" role="chance">
+        <Coordinates x="337" y="374" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+      <Variable name="Fuma (F)" type="finiteStates" role="chance">
+        <Coordinates x="689" y="125" />
+        <States>
+          <State name="NO" />
+          <State name="SI" />
+        </States>
+      </Variable>
+      <Variable name="Bronquitis (B)" type="finiteStates" role="chance">
+        <Coordinates x="816" y="215" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+      <Variable name="Disnea (D)" type="finiteStates" role="chance">
+        <Coordinates x="673" y="384" />
+        <States>
+          <State name="ausente" />
+          <State name="presente" />
+        </States>
+      </Variable>
+    </Variables>
+    <Links>
+      <Link directed="true">
+        <Variable name="Visito Asia (A)" />
+        <Variable name="Tuberculosis (T)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Tuberculosis (T)" />
+        <Variable name="Enfermo ToC (E)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Enfermo ToC (E)" />
+        <Variable name="Positivo en Rayos (X)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Enfermo ToC (E)" />
+        <Variable name="Disnea (D)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Cáncer Pulmón (C)" />
+        <Variable name="Enfermo ToC (E)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fuma (F)" />
+        <Variable name="Cáncer Pulmón (C)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Fuma (F)" />
+        <Variable name="Bronquitis (B)" />
+      </Link>
+      <Link directed="true">
+        <Variable name="Bronquitis (B)" />
+        <Variable name="Disnea (D)" />
+      </Link>
+    </Links>
+    <Potentials>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Visito Asia (A)" />
+        </Variables>
+        <Values>0.99 0.01</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Tuberculosis (T)" />
+          <Variable name="Visito Asia (A)" />
+        </Variables>
+        <Values>0.99 0.01 0.95 0.05</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Enfermo ToC (E)" />
+          <Variable name="Tuberculosis (T)" />
+          <Variable name="Cáncer Pulmón (C)" />
+        </Variables>
+        <Values>1.0 0.0 0.0 1.0 0.0 1.0 0.0 1.0</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Cáncer Pulmón (C)" />
+          <Variable name="Fuma (F)" />
+        </Variables>
+        <Values>0.99 0.01 0.9 0.1</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Positivo en Rayos (X)" />
+          <Variable name="Enfermo ToC (E)" />
+        </Variables>
+        <Values>0.95 0.05 0.02 0.98</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Fuma (F)" />
+        </Variables>
+        <Values>0.5 0.5</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Bronquitis (B)" />
+          <Variable name="Fuma (F)" />
+        </Variables>
+        <Values>0.7 0.3 0.4 0.6</Values>
+      </Potential>
+      <Potential type="Table" role="conditionalProbability">
+        <Variables>
+          <Variable name="Disnea (D)" />
+          <Variable name="Enfermo ToC (E)" />
+          <Variable name="Bronquitis (B)" />
+        </Variables>
+        <Values>0.9 0.1 0.3 0.7 0.2 0.8 0.1 0.9</Values>
+      </Potential>
+    </Potentials>
+  </ProbNet>
+  <InferenceOptions>
+    <MulticriteriaOptions>
+      <SelectedAnalysisType>UNICRITERION</SelectedAnalysisType>
+    </MulticriteriaOptions>
+  </InferenceOptions>
+  <Evidence>
+    <EvidenceCase />
+    <EvidenceCase>
+      <Finding variable="Positivo en Rayos (X)" state="presente" />
+      <Finding variable="Visito Asia (A)" state="SI" />
+    </EvidenceCase>
+  </Evidence>
+</ProbModelXML>
